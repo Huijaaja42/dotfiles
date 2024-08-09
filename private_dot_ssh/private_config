@@ -1,0 +1,23 @@
+Host *
+    ServerAliveInterval 60
+    ServerAliveCountMax 10
+
+Match originalhost levi exec "[ $(nmcli connection show --active | grep wifi | awk '{print $1}') == 'Kotiverkko' ]"
+    HostName 10.20.20.10
+
+Match originalhost ads-b exec "[ $(nmcli connection show --active | grep wifi | awk '{print $1}') == 'Kotiverkko' ]"
+    HostName 10.10.10.20
+
+Host ads-b
+    User pi
+
+Match originalhost haos exec "[ $(nmcli connection show --active | grep wifi | awk '{print $1}') == 'Kotiverkko' ]"
+    HostName 10.10.20.10
+
+Match originalhost homeassistant exec "[ $(nmcli connection show --active | grep wifi | awk '{print $1}') == 'Kotiverkko' ]"
+    HostName 10.10.20.10
+
+Host haos homeassistant
+    User root
+    HostName homeassistant
+    Port 22222

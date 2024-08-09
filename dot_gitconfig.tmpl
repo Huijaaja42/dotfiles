@@ -1,0 +1,21 @@
+[user]
+    name = Christian Kovanen
+    email = christian@intor.fi
+{{- if eq .chezmoi.hostname "fedora" }}
+    signingkey = F39D9592C8F885EB 
+{{- else }}
+    signingkey =
+{{- end }}
+[color]
+    ui = true
+[core]
+    editor = nvim
+[commit]
+    gpgsign = true
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
+[init]
+    defaultBranch = master
+[pull]
+    rebase = false
+

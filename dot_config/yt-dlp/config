@@ -1,0 +1,2 @@
+--no-playlist
+-o ~/Downloads/YouTube/%(title)s.%(ext)s

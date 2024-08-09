@@ -1,0 +1,5 @@
+default_session = "default"
+
+[[search_dirs]]
+path = "/home/christian/personal"
+depth = 10
