@@ -55,7 +55,7 @@ vim.keymap.set('n', '<leader>ts', function()
   vim.api.nvim_win_set_height(0, 12)
   vim.wo.winfixheight = true
   vim.cmd.term()
-end, { desc = '[T]erminal' })
+end, { desc = '[T]erminal [S]plit' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set('n', '<left>', '<C-w>>')
 vim.keymap.set('n', '<right>', '<C-w><')
