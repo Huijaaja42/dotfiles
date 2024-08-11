@@ -544,6 +544,9 @@ require('lazy').setup({
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup(opts)
     end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-context',
+    },
   },
 }, {
   ui = {
