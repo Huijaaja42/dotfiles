@@ -1,3 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-read -p 'Query: ' q && cht.sh $q && while [ : ]; do sleep 1; done
+while true; do
+	printf "\n"
+	read -rp 'Query: ' q && cht.sh "$q"
+done
