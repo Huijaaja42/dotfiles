@@ -43,6 +43,10 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = '[P]roject [V]isual' })
 vim.keymap.set('n', '<leader>x', function()
   local f = vim.fn.expand '%'
+  if vim.fn.filereadable(f) == 0 then
+    print 'File is not readable'
+    return
+  end
   local c = vim.fn.confirm('chmod +x ' .. f, '&Yes\n&No')
   if c == 1 then
     os.execute('chmod +x ' .. f)
@@ -61,10 +65,6 @@ vim.keymap.set('n', '<left>', '<C-w>>')
 vim.keymap.set('n', '<right>', '<C-w><')
 vim.keymap.set('n', '<up>', '<C-w>+')
 vim.keymap.set('n', '<down>', '<C-w>-')
-vim.keymap.set('i', '<left>', '')
-vim.keymap.set('i', '<right>', '')
-vim.keymap.set('i', '<up>', '')
-vim.keymap.set('i', '<down>', '')
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
@@ -75,6 +75,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
+  callback = function()
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
+      vim.api.nvim_command 'silent update'
+    end
   end,
 })
 
@@ -94,6 +102,12 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
   'subnut/nvim-ghost.nvim',
   'apple/pkl-neovim',
+
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+  },
 
   {
     'kristijanhusak/vim-dadbod-ui',
@@ -466,7 +480,9 @@ require('lazy').setup({
     config = function()
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
+      local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
       luasnip.config.setup {}
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
       cmp.setup {
         snippet = {
           expand = function(args)
