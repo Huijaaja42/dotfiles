@@ -577,6 +577,7 @@ require('lazy').setup({
     end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter-context',
+      'RRethy/nvim-treesitter-endwise',
       'windwp/nvim-ts-autotag',
     },
   },
