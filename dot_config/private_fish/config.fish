@@ -11,7 +11,7 @@ if status is-interactive
     abbr -a !! --position anywhere --function last_history_item
 
     if not set -q TMUX
-        pfetch
+        tmux a -t default || tmux
     end
 
     zoxide init fish | source
